@@ -3,13 +3,13 @@ const path = require('path');
 
 const srcFolder = path.resolve(__dirname, 'files')
 
-const copyFolder = path.resolve(__dirname, 'copy')
+const copyFolder = path.resolve(__dirname, 'files-copy')
 
 
 fs.readdir(__dirname, (err, files) => {
     if (err) throw err
     if (files.some((item) => {
-        return item === 'copy'
+        return item === 'files-copy'
     })) {
         fs.rm(copyFolder, {recursive: true, force: true}, err => {
             if (err) throw  err
