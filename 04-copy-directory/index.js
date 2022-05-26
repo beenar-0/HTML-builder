@@ -13,10 +13,11 @@ fs.readdir(__dirname, (err, files) => {
     })) {
         fs.rm(copyFolder,{ recursive:true,force:true},err => {
             if (err) throw  err
+            fs.mkdir(copyFolder,err => {
+                if (err) throw  err
+            })
         })
-    } else fs.mkdir(copyFolder,err => {
-        if (err) throw  err
-    })
+    }
 })
 
 fs.readdir(srcFolder, {withFileTypes: true}, (e, files) => {
@@ -25,7 +26,7 @@ fs.readdir(srcFolder, {withFileTypes: true}, (e, files) => {
         const filePath = path.resolve(srcFolder, item.name)
         const copyPath = path.resolve(copyFolder, item.name)
         console.log(copyPath)
-        fs.copyFile(filePath, copyPath, err => {
+        fs.copyFile(filePath, copyPath, e => {
             if (e) throw e
         })
     })
