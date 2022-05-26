@@ -8,10 +8,13 @@ const copyFolder = path.resolve(__dirname, 'copy')
 
 fs.readdir(__dirname, (err, files) => {
     if (err) throw err
-    console.log(files)
-    if (!files.some((item) => {
+    if (files.some((item) => {
         return item === 'copy'
-    })) fs.mkdir(copyFolder, err => {
+    })) {
+        fs.rm(copyFolder,{ recursive:true,force:true},err => {
+            if (err) throw  err
+        })
+    } else fs.mkdir(copyFolder,err => {
         if (err) throw  err
     })
 })
