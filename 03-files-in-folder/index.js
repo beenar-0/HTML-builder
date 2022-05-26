@@ -11,7 +11,7 @@ fs.readdir(folder, {withFileTypes: true}, (e, files) => {
         fs.stat(filePath, (e, stat) => {
             if (e) throw e
             const size = stat.size
-            console.log(`${name} - ${ext} - ${size/1000}kb`)
+            if (item.isFile()) console.log(`${name} - ${ext} - ${size/1000}kb`)
         })
     })
 })
