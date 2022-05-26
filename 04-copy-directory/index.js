@@ -11,9 +11,9 @@ fs.readdir(__dirname, (err, files) => {
     if (files.some((item) => {
         return item === 'copy'
     })) {
-        fs.rm(copyFolder,{ recursive:true,force:true},err => {
+        fs.rm(copyFolder, {recursive: true, force: true}, err => {
             if (err) throw  err
-            fs.mkdir(copyFolder,err => {
+            fs.mkdir(copyFolder, err => {
                 if (err) throw  err
                 fs.readdir(srcFolder, {withFileTypes: true}, (e, files) => {
                     if (e) throw e
@@ -29,6 +29,20 @@ fs.readdir(__dirname, (err, files) => {
                 })
             })
         })
-    }
+    } else fs.mkdir(copyFolder, err => {
+        if (err) throw  err
+        fs.readdir(srcFolder, {withFileTypes: true}, (e, files) => {
+            if (e) throw e
+            files.forEach((item) => {
+                const filePath = path.resolve(srcFolder, item.name)
+                const copyPath = path.resolve(copyFolder, item.name)
+                console.log(copyPath)
+                fs.copyFile(filePath, copyPath, e => {
+                    if (e) throw e
+                })
+            })
+
+        })
+    })
 })
 
